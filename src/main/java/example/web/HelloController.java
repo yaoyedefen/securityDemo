@@ -20,7 +20,7 @@ public class HelloController {
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     //@PreAuthorize("hasRole('ROLE_ADMIN')")
 
-    //@EnableMethodSecurity(jsr250Enabled = true, prePostEnabled = false)
+    //@EnableMethodSecurity(jsr250Enabled = true)
     //@RolesAllowed({"USER"})
     //@RolesAllowed({"ADMIN"})
     public String hello(Authentication authentication) {
