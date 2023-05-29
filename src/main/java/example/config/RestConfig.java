@@ -47,11 +47,11 @@ public class RestConfig {
                 )
                 //.csrf((csrf) -> csrf.ignoringAntMatchers("/token"))
                 //.httpBasic(Customizer.withDefaults())
+                //token 拦截解析
                 .addFilterBefore(new TokenFilter(redisTemplate), UsernamePasswordAuthenticationFilter.class)
-                //.addFilter(new JwtLoginFilter(authenticationManager(http.getSharedObject(AuthenticationConfiguration.class)),jwtEncoder()))
+                //登录拦截
                 .addFilter(new RedisTokenLoginFilter(authenticationManager(http.getSharedObject(AuthenticationConfiguration.class)), redisTemplate))
                 .exceptionHandling().accessDeniedHandler(new MyAccessDeniedHandler()).and()
-                //.addFilterBefore(new AccessFilter(RequestMatcherDelegatingAuthorizationManager.builder().add().build()), AuthorizationFilter.class)
                 .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         // @formatter:on
         return http.build();
@@ -66,20 +66,5 @@ public class RestConfig {
     void setAuthorizationEventPublisher(AuthorizationEventPublisher eventPublisher, @Qualifier("jsr250AuthorizationMethodInterceptor") AuthorizationManagerBeforeMethodInterceptor managerBeforeMethodInterceptor) {
         managerBeforeMethodInterceptor.setAuthorizationEventPublisher(eventPublisher);
     }
-
-
-//	@Bean
-//	UserDetailsService users() {
-//		// @formatter:off
-//		return new InMemoryUserDetailsManager(
-//			User.withUsername("user")
-//				.password("{noop}password")
-//				.authorities("app")
-//					.roles("USER")
-//				.build()
-//		);
-//		// @formatter:on
-//	}
-
 
 }
