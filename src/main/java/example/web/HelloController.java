@@ -17,8 +17,8 @@ public class HelloController {
     //@EnableMethodSecurity
     //@PreAuthorize("hasAuthority('ROLE_USER')")
     //@PreAuthorize("hasRole('ROLE_USER')")
-    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
-    //@PreAuthorize("hasRole('ROLE_ADMIN')")
+    //@PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
 
     //@EnableMethodSecurity(jsr250Enabled = true)
     //@RolesAllowed({"USER"})

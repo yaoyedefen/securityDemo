@@ -1,5 +1,6 @@
 package example.config;
 
+import example.filter.MyAccessDeniedHandler;
 import example.filter.RedisTokenLoginFilter;
 import example.filter.TokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,7 @@ public class RestConfig {
                 .addFilterBefore(new TokenFilter(redisTemplate), UsernamePasswordAuthenticationFilter.class)
                 //.addFilter(new JwtLoginFilter(authenticationManager(http.getSharedObject(AuthenticationConfiguration.class)),jwtEncoder()))
                 .addFilter(new RedisTokenLoginFilter(authenticationManager(http.getSharedObject(AuthenticationConfiguration.class)), redisTemplate))
+                .exceptionHandling().accessDeniedHandler(new MyAccessDeniedHandler()).and()
                 //.addFilterBefore(new AccessFilter(RequestMatcherDelegatingAuthorizationManager.builder().add().build()), AuthorizationFilter.class)
                 .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         // @formatter:on
